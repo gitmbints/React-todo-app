@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
-import Assignment from '@material-ui/icons/Assignment';
-import { 
-  Typography, 
-  Button, 
+import { TodoBanner } from './TodoBanner';
+import { TodoCreator } from './TodoCreator';
+import { TodoRow } from './TodoRow';
+import { VisibilityControl } from './VisibilityControl';
+import {  
   Container, 
-  TextField, 
-  InputAdornment,
   List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
-  Checkbox
 } from '@material-ui/core';
 
-
-
 class App extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -25,28 +19,23 @@ class App extends Component {
         {action: "Get Shoes", done: false},
         {action: "Coding with React", done: true},
         {action: "Call Doe", done: false}],
-      newItemText: ""
+      showCompleted: true
     }
   }
 
+  // I don't understand this snippet
   toggleTodo = todo => this.setState({
     todoItems: this.state.todoItems.map(item => item.action === todo.action ? {...item, done: !item.done} : item)
   });
 
-  todoListRows = () => this.state.todoItems.map((item, index) => {
-    const labelId = `checkbox-list-secondary-label-${index}`;
+  todoListRows = (doneValue) => this.state.todoItems.filter(item => item.done === doneValue).map((item, index) => {
     return (
-      <ListItem key={ item.action } button>
-        <ListItemText id={labelId} primary={ item.action } />
-        <ListItemSecondaryAction>
-          <Checkbox
-            edge="end"
-            onChange={ () => this.toggleTodo(item) }
-            checked={ item.done }
-            inputProps={{ 'aria-labelledby': labelId }}
-          />
-        </ListItemSecondaryAction>
-      </ListItem>
+      <TodoRow 
+        key={item.action} 
+        item={item} 
+        callback={this.toggleTodo} 
+        labelId={`checkbox-list-secondary-label-${index}`} 
+      />
     );
   });
 
@@ -56,48 +45,35 @@ class App extends Component {
     });
   }
 
-  createNewTodo = () => {
-    if (!this.state.todoItems.find(item => item.action === this.state.newItemText)) {
+  createNewTodo = (task) => {
+    if (!this.state.todoItems.find(item => item.action === task)) {
       this.setState({
-        todoItems: [...this.state.todoItems, {action: this.state.newItemText, done: false}],
-        newItemText: ""
+        todoItems: [...this.state.todoItems, {action: task, done: false}],
       });
-      console.log(this.state.todoItems);
     }
   }
 
   render = () => 
     <div align="center">
-      <Typography variant='h4' align='center' gutterBottom>
-        {this.state.userName}'s To Do List
-        ({ this.state.todoItems.filter(t => !t.done).length } items to do)
-      </Typography>
-      <Container maxWidth="md">
-        <form noValidate autoComplete="off" gutterBottom>
-          <TextField 
-            id="input-with-icon-textfield"
-            label="Task"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Assignment />
-                </InputAdornment>
-              ),
-            }}
-            value={this.state.newItemText}
-            onChange={this.updateNewTextValue}
-          />
-          <Button 
-            variant="contained" 
-            color="primary"
-            onClick={this.createNewTodo}
-          >
-            Add
-          </Button>
-        </form>
+      <Container maxWidth="sm">
+        <TodoBanner 
+          name={this.state.userName}
+          tasks={this.state.todoItems}
+        />
+        <TodoCreator callback={this.createNewTodo} />
         <List dense>
-          { this.todoListRows() }
+          {this.todoListRows(false)}
         </List>
+        <VisibilityControl 
+          description="Completed Tasks"
+          isChecked={this.state.showCompleted}
+          callback={ (checked) => this.setState({showCompleted: checked}) }
+        />
+        { this.state.showCompleted &&
+          <List dense>
+            {this.todoListRows(true)}
+          </List>
+        }
       </Container>
     </div>
 }
