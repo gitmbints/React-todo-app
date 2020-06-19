@@ -1,24 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   AppBar,
   Toolbar,
   Typography,
-
+  makeStyles,
 } from '@material-ui/core';
 
-class TodoBanner extends Component {
-  render() { 
-    return ( 
-      <AppBar position="static" color="default">
-        <Toolbar variant="dense">
-          <Typography variant="h6" >
-            {this.props.name}'s To Do List
-            ({this.props.tasks.filter(t => !t.done).length} items to do)
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    );
-  }
+const useStyles = makeStyles({
+  root: {
+    marginBottom: 20, 
+  },
+});
+
+function TodoBanner (props) {
+  const classes = useStyles();
+  return ( 
+    <AppBar className={classes.root} position="static" color="default">
+      <Toolbar variant="dense">
+        <Typography variant="h6" >
+          {props.name}'s To Do List
+          ({props.tasks.filter(t => !t.done).length} items to do)
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  );
 }
  
 export { TodoBanner };
