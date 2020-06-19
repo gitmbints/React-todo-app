@@ -16,8 +16,8 @@ function TodoBanner (props) {
   const classes = useStyles();
   return ( 
     <AppBar className={classes.root} position="static" color="default">
-      <Toolbar variant="dense">
-        <Typography variant="h6" >
+      <Toolbar>
+        <Typography variant="h6">
           {props.name}'s To Do List
           ({props.tasks.filter(t => !t.done).length} items to do)
         </Typography>

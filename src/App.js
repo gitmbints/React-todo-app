@@ -19,7 +19,8 @@ class App extends Component {
         {action: "Buy Flowers", done: false},
         {action: "Get Shoes", done: false},
         {action: "Coding with React", done: true},
-        {action: "Call Doe", done: false}],
+        {action: "Call Doe", done: false}
+      ],
       showCompleted: true
     }
   }
@@ -50,8 +51,22 @@ class App extends Component {
     if (!this.state.todoItems.find(item => item.action === task)) {
       this.setState({
         todoItems: [...this.state.todoItems, {action: task, done: false}],
-      });
+      }, () => localStorage.setItem("todos", JSON.stringify(this.state)));
     }
+  }
+
+  componentDidMount = () => {
+    let data = localStorage.getItem("todos");
+    this.setState(data !== null ? JSON.parse(data) : {
+      userName: "John",
+      todoItems: [
+        {action: "Buy Flowers", done: false},
+        {action: "Get Shoes", done: false},
+        {action: "Coding with React", done: true},
+        {action: "Call Doe", done: false}
+      ],
+      showCompleted: true
+    });
   }
 
   render = () => 

@@ -7,7 +7,6 @@ import {
   TextField,
   InputAdornment,
   IconButton,
-  Grid
 } from '@material-ui/core';
 
 class TodoCreator extends Component {
