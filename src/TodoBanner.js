@@ -8,7 +8,7 @@ import {
 
 const useStyles = makeStyles({
   root: {
-    marginBottom: 20, 
+    marginBottom: 30, 
   },
 });
 

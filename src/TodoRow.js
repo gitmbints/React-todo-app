@@ -9,7 +9,7 @@ import {
 class TodoRow extends Component {
   render() {
     return ( 
-      <ListItem button>
+      <ListItem>
         <ListItemText id={this.props.labelId} primary={this.props.item.action} />
         <ListItemSecondaryAction>
           <Checkbox

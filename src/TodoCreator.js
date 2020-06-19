@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import Assignment from '@material-ui/icons/Assignment';
+import {
+  Assignment,
+  PostAdd
+} from '@material-ui/icons';
 import {
   TextField,
   InputAdornment,
-  Button
+  IconButton,
+  Grid
 } from '@material-ui/core';
 
 class TodoCreator extends Component {
@@ -36,14 +40,14 @@ class TodoCreator extends Component {
           }}
           value={this.state.newItemText}
           onChange={this.updateNewTextValue}
+          margin="normal"
         />
-        <Button 
-          variant="contained" 
-          color="primary"
+        <IconButton 
+          aria-label="add"
           onClick={this.createNewTodo}
         >
-          Add Task
-        </Button>
+          <PostAdd />
+        </IconButton>
       </form>
     );
   }

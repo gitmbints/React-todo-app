@@ -6,6 +6,7 @@ import { VisibilityControl } from './VisibilityControl';
 import {  
   Container, 
   List,
+  Paper
 } from '@material-ui/core';
 
 class App extends Component {
@@ -61,18 +62,22 @@ class App extends Component {
           tasks={this.state.todoItems}
         />
         <TodoCreator callback={this.createNewTodo} />
-        <List dense>
-          {this.todoListRows(false)}
-        </List>
+        <Paper square elevation={2}>
+          <List dense>
+            {this.todoListRows(false)}
+          </List>
+        </Paper>
         <VisibilityControl 
           description="Completed Tasks"
           isChecked={this.state.showCompleted}
           callback={ (checked) => this.setState({showCompleted: checked}) }
         />
         { this.state.showCompleted &&
-          <List dense>
-            {this.todoListRows(true)}
-          </List>
+          <Paper square elevation={2}>
+            <List dense>
+              {this.todoListRows(true)}
+            </List>
+          </Paper>
         }
       </Container>
     </div>
